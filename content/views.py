@@ -73,7 +73,8 @@ class ContentFilterView(APIView):
     def get(self, request):
         title = request.query_params.get("title", None)
 
-        contents = Content.objects.filter(title=title)
+        # O icontains deve fazer com que a busca seja case insensitive.
+        contents = Content.objects.filter(title__icontains=title)
         contents_dict = [model_to_dict(content) for content in contents]
 
         return Response(contents_dict)
